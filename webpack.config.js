@@ -37,6 +37,9 @@ module.exports = {
       loader: ExtractTextPlugin.extract(
         'css?sourceMap&-minimize!' + 'autoprefixer-loader'
       )
+    }, {
+      test   : /\.(ttf|eot|svg|woff(2)?)(\?(.)+)?$/,
+      loader : 'file-loader'
     }]
   },
 
