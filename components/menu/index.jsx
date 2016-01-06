@@ -61,10 +61,12 @@ const AntMenu = React.createClass({
       onClose: this.handleCloseKeys,
     };
     const className = this.props.className + ' ' + this.props.prefixCls + '-' + this.props.theme;
+    // Fix rc-menu bug which do not remove undefined children
+    let children = this.props.children.filter(function(item){return !!item; });
     if (this.props.mode === 'inline') {
-      return <Menu {...this.props} className={className} openAnimation={openAnimation} />;
+      return <Menu {...this.props} className={className} openAnimation={openAnimation} children={children}/>;
     } else {
-      return <Menu {...this.props} {...props} className={className} openTransitionName={openAnimation} />;
+      return <Menu {...this.props} {...props} className={className} openTransitionName={openAnimation} children={children}/>;
     }
   }
 });
