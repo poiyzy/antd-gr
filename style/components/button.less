@@ -1,6 +1,28 @@
 @import "../mixins/index";
 @btn-prefix-cls: ~"@{css-prefix}btn";
 
+// 组合按钮 色调
+// @group-btn-color        : #f7f8f9;
+// @group-btn-border       : shade(#dcdcdc, 5%);
+// @group-btn-bg           : #6b7d8f;
+@group-btn-hover-color  : #8499AD;
+@group-btn-hover-border : #8499AD;
+ 
+
+// 组合按钮禁止样式
+@group-btn-disabled-bg  : #e1e1e1;
+@group-btn-disabled-border : #b6b6b6;
+@group-btn-disabled-color: #ccc;
+
+// 组合按钮 parmary-btn 样式
+@group-btn-color-primary: #f7f8f9;
+@group-btn-bg-primary: #6b7d8f;
+
+// 组合按钮 普通按钮样式
+@group-btn-color        : #6b7d8f;
+@group-btn-bg           : #f7f8f9;
+@group-btn-border       : shade(#dcdcdc, 5%);
+
 // Button styles
 // -----------------------------
 .@{btn-prefix-cls} {
@@ -10,24 +32,26 @@
   &-primary {
     .btn-primary;
 
-    .@{btn-prefix-cls}-group &:not(:first-child):not(:last-child) {
-      border-right-color: @btn-group-border;
-      border-left-color: @btn-group-border;
-    }
+    //将其转移到group-btn中
+    // .@{btn-prefix-cls}-group &:not(:first-child):not(:last-child) {
+    //   border-right-color: @btn-group-border;
+    //   border-left-color: @btn-group-border;
+    // }
 
-    .@{btn-prefix-cls}-group &:first-child {
-      &:not(:last-child) {
-        border-right-color: @btn-group-border;
-      }
-    }
+   
+    // .@{btn-prefix-cls}-group &:first-child {
+    //   &:not(:last-child) {
+    //     border-right-color: @btn-group-border;
+    //   }
+    // }
 
-    .@{btn-prefix-cls}-group &:last-child:not(:first-child) {
-      border-left-color: @btn-group-border;
-    }
+    // .@{btn-prefix-cls}-group &:last-child:not(:first-child) {
+    //   border-left-color: @btn-group-border;
+    // }
 
-    .@{btn-prefix-cls}-group & + .@{btn-prefix-cls} {
-      border-left-color: @btn-group-border;
-    }
+    // .@{btn-prefix-cls}-group & + .@{btn-prefix-cls} {
+    //   border-left-color: @btn-group-border;
+    // }
   }
 
   &-ghost {
@@ -75,8 +99,72 @@
     }
   }
 
+  &-lg {
+    line-height: 16px;
+    height: 40px;
+  }
+
+  &-md {
+    line-height: 14px;
+    height: 35px;
+  }
+
+  &-sm {
+    height: 26px;
+    line-height: 12px;
+  }
+
+  // 组合按钮
   &-group {
-    .btn-group(@btn-prefix-cls);
+    // 组合按钮总样式
+    .btn-group(@btn-prefix-cls); 
+
+    // 按钮公共样式
+    .@{btn-prefix-cls} {
+        height: 26px;
+        padding: 0 10px;
+        &:hover {
+          z-index: 1px;
+        }
+    }
+    // 被禁按钮颜色设置
+    .@{btn-prefix-cls}[disabled] {
+      .button-color(@group-btn-disabled-color, @group-btn-disabled-bg, @group-btn-disabled-border);
+    }
+
+     // 选择按钮颜色设置
+    .@{btn-prefix-cls}-primary { 
+       z-index: 2; /* 修复border-right 显示的问题提*/
+      .button-variant(@group-btn-color-primary; @group-btn-bg-primary; @group-btn-bg-primary) !important;
+    }
+
+    // 未被禁按钮颜色设置
+    .@{btn-prefix-cls}:not([disabled]) {
+      .button-variant(@group-btn-color, @group-btn-bg, @group-btn-border);
+      &:hover {
+        .button-variant(@group-btn-color-primary; @group-btn-bg-primary; @group-btn-bg-primary) !important;
+      }
+    }
+
+    .@{btn-prefix-cls}-primary:not(:first-child):not(:last-child) {
+      border-right-color: @group-btn-border;
+      border-left-color:@group-btn-border;
+    }
+
+   
+    .@{btn-prefix-cls}-primary::first-child {
+      &:not(:last-child) {
+        border-right-color: @group-btn-border;
+      }
+    }
+
+    .@{btn-prefix-cls}-primary::last-child:not(:first-child) {
+      border-left-color: @group-btn-border;
+    }
+
+    .@{btn-prefix-cls}-primary + .@{btn-prefix-cls} {
+      border-left-color: @group-btn-border;
+    }
   }
 
   // To ensure that a space will be placed between character and `Icon`.

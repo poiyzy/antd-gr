@@ -12,25 +12,21 @@
   &:hover {
     .button-color(tint(@color, 20%); tint(@background, 20%); tint(@border, 20%));
   }
-  &:active,
-  &.active {
+
+  &:active, &.active {
     .button-color(shade(@color, 5%); shade(@background, 5%); shade(@background, 5%));
   }
-  &:active,
-  &.active {
+
+  &:active, &.active {
     background-image: none;
   }
-
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &,
-    &:hover,
-    &:active,
-    &.active {
-      .button-color(@btn-disable-color; @btn-disable-bg; @btn-disable-border);
-    }
-  }
+  
+  // 将其分拆到各种button中
+  // &.disabled, &[disabled], fieldset[disabled] & {
+  //   & {
+  //     .button-color(@btn-disable-color; @btn-disable-bg; @btn-disable-border);
+  //   }
+  // }
 }
 
 .button-color(@color; @background; @border) {
@@ -39,6 +35,7 @@
   border-color: @border;
 }
 
+// 组合按钮
 .button-group-base(@btnClassName) {
   position: relative;
   display: inline-block;
@@ -46,12 +43,12 @@
   > .@{btnClassName} {
     position: relative;
     float: left;
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      z-index: 2;
-    }
+    // &:hover,
+    // &:focus,
+    // &:active,
+    // &.active {
+    //   z-index: 2;
+    // }
   }
 
   // size
@@ -59,10 +56,14 @@
     .button-size(@btn-padding-lg; @btn-font-size-lg; @btn-border-radius-lg);
   }
 
+  &-md > .@{btnClassName} {
+    .button-size(@btn-padding-md; @btn-font-size-md; @btn-border-radius-sm);
+  }
+
   &-sm > .@{btnClassName} {
-    .button-size(@btn-padding-sm; @font-size-base; @btn-border-radius-sm);
+    .button-size(@btn-padding-sm; @btn-font-size-sm; @btn-border-radius-sm);
     > .@{iconfont-css-prefix} {
-      font-size: @font-size-base;
+      font-size: @btn-font-size-sm;
     }
   }
 }
@@ -118,6 +119,10 @@
     .button-size(@btn-padding-lg; @btn-font-size-lg; @btn-border-radius-lg);
   }
 
+  &-md {
+    .button-size(@btn-padding-md; @btn-font-size-md; @btn-border-radius-sm);
+  }
+
   &-sm {
     .button-size(@btn-padding-sm; @font-size-base; @btn-border-radius-sm);
   }
@@ -126,11 +131,15 @@
 // primary button style
 .btn-primary() {
   .button-variant(@btn-primary-color; @btn-primary-bg; @primary-color);
-
-  &:hover,
-  &:active,
-  &.active {
+  
+  &:hover, &:active, &.active {
     color: @btn-primary-color;
+  }
+  // 将其分拆到各种button中
+  &.disabled, &[disabled], fieldset[disabled] & {
+    & {
+      .button-color(@btn-disable-color; @btn-disable-bg; @btn-disable-border);
+    }
   }
 }
 
@@ -145,6 +154,12 @@
   &.active {
     .button-color(shade(@primary-color, 5%); white; shade(@primary-color, 5%));
   }
+
+  &.disabled, &[disabled], fieldset[disabled] & {
+    & {
+      .button-color(@btn-disable-color; @btn-disable-bg; @btn-disable-border);
+    }
+  }
 }
 
 // ghost button style
@@ -157,6 +172,12 @@
   &:active,
   &.active {
     .button-color(shade(@primary-color, 5%); white; shade(@primary-color, 5%));
+  }
+  
+  &.disabled, &[disabled], fieldset[disabled] & {
+    & {
+      .button-color(@btn-disable-color; @btn-disable-bg; @btn-disable-border);
+    }
   }
 }
 
@@ -240,14 +261,12 @@
     &:not(:last-child) {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
-      padding-right: 8px;
     }
   }
 
   > .@{btnClassName}:last-child:not(:first-child) {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
-    padding-left: 8px;
   }
 
  & > & {
